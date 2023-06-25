@@ -1,32 +1,32 @@
 #include<bits/stdc++.h>
 using namespace std;
 /*紀錄整張圖的最大高度差(最高-最低)
-  二分搜0~最大高度差
-  試試看在該高度差限制下能否蓋出(DFS)
-  確定最小限制之後用BFS球最短距離
+  二分搜高度限制=0~最大高度差
+  試試看在該高度差限制下能否蓋出步道(用DFS比較快)
+  確定最小限制高度之後用BFS求最短距離
 */
-int graph[305][305];
-int n,maxH=0,minH=INT32_MAX;
-int flag = 0;//給二分搜的DFS用的
+int graph[305][305];//存高度
+int n,maxH=0,minH=INT32_MAX;//圖大小,圖中最大高度及最低高度
+int flag = 0;//能否蓋出步道,給二分搜的DFS用的
 int visited[305][305] = {};//DFS用的
-int dx[] = {0,0,1,-1},dy[] = {1,-1,0,0};//DFS用的
-int dis[305][305];//BFS用
+int dx[] = {0,0,1,-1},dy[] = {1,-1,0,0};//移動方向,DFS用的
+int dis[305][305];//距離, BFS用
 
 void dfs(int x,int y,int deltaH){
-    visited[x][y] = 1;
+    visited[x][y] = 1; //到此一遊
     if((x == n && y == n) || flag){ //到了
         flag = 1;
         return;
     }
-    for(int i = 0; i < 4; i++){
+    for(int i = 0; i < 4; i++){//往四方向移動
         int nx = x+dx[i], ny = y+dy[i];
         if(nx<=0 || nx>n || ny<=0 || ny>n) continue; //out of range 
-        if(abs(graph[x][y] - graph[nx][ny]) > deltaH || visited[nx][ny]) continue; //高度差太多
+        if(abs(graph[x][y] - graph[nx][ny]) > deltaH || visited[nx][ny]) continue; //高度差太多蓋不了
         dfs(nx, ny, deltaH);
     }
 }
 
-queue<int> q;//一次存取兩位(x,y)
+queue<int> q;//存要訪問的座標,一次存取兩位(x,y)
 void bfs(int x, int y,int deltaH){
     dis[x][y] = 0;
     q.push(x); q.push(y);
@@ -46,7 +46,7 @@ void bfs(int x, int y,int deltaH){
 }
 
 int main(){
-    //ios_base::sync_with_stdio(0); cin.tie(0);
+    ios_base::sync_with_stdio(0); cin.tie(0);
     cin >> n;
     for(int i = 1; i <= n; i++){
         for(int j = 1; j <= n; j++){
