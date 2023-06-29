@@ -10,7 +10,8 @@ int main(){ //變數要開long long 喔
     long long n,sum = 0,temp;//塊數, 代價
     while(cin >> n){ //本題為EOF
         sum = 0;
-        priority_queue<long long, vector<long long>, greater<long long> > body; //值從小到大的pq
+        priority_queue<long long, vector<long long>, greater<long long> > body;
+        //值從小到大的pq
 
         while (n--){
             cin >> temp;
