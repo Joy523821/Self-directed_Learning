@@ -14,7 +14,7 @@ int dis[305][305];//距離, BFS用
 
 void dfs(int x,int y,int deltaH){
     visited[x][y] = 1; //到此一遊
-    if((x == n && y == n) || flag){ //到了
+    if((x == n && y == n) || flag){ //到了或已確認可蓋所以不用繼續跑
         flag = 1;
         return;
     }
